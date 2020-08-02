@@ -1,7 +1,9 @@
 import arc.Core;
 import arc.Events;
+import mindustry.entities.type.Player;
 import mindustry.game.EventType;
 import mindustry.gen.Call;
+import mindustry.net.Administration;
 import mindustry.plugin.Plugin;
 import org.yaml.snakeyaml.Yaml;
 
@@ -10,7 +12,7 @@ import java.util.Map;
 import static mindustry.Vars.netServer;
 
 public class Tag extends Plugin {
-    private Map<String, Object> obj;
+    private final Map<String, Object> obj;
 
     public Tag(){
         String format = "%1: %2";
@@ -23,8 +25,12 @@ public class Tag extends Plugin {
         Yaml yml = new Yaml();
         obj = yml.load(String.valueOf(Core.settings.getDataDirectory().child("tag.yml").readString()));
 
-        Events.on(EventType.ServerLoadEvent.class, e-> netServer.admins.addChatFilter((player, text) -> null));
-        Events.on(EventType.PlayerChatEvent.class, e-> Call.sendMessage(getValue().replace("%1", e.player.name).replace("%2",e.message)));
+        Events.on(EventType.PlayerChatEvent.class, e -> Call.sendMessage(getValue().replace("%1", e.player.name).replace("%2",e.message)));
+    }
+
+    @Override
+    public void init() {
+        netServer.admins.addChatFilter((player, text) -> null);
     }
 
     public String getValue(){
