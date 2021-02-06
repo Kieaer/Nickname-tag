@@ -1,10 +1,8 @@
 import arc.Core;
 import arc.Events;
-import mindustry.entities.type.Player;
 import mindustry.game.EventType;
 import mindustry.gen.Call;
-import mindustry.net.Administration;
-import mindustry.plugin.Plugin;
+import mindustry.mod.Plugin;
 import org.yaml.snakeyaml.Yaml;
 
 import java.util.Map;
